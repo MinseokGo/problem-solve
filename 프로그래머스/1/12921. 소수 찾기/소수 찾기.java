@@ -2,10 +2,12 @@ import java.util.*;
 
 class Solution {
     public int solution(int n) {
-        int answer = 2;
+        int answer = 0;
         if (n == 2) return 1;
         
-        for(int i=2; i<=n; i++) {
+        if (n >= 3) {
+            answer = 2;
+            for(int i=2; i<=n; i++) {
             boolean isPrime = false;
             for(int j=2; j<=Math.sqrt(i); j++) {
                 if(!(i%j == 0)) {
@@ -15,7 +17,10 @@ class Solution {
                     break;
                 }
             }
-            if (isPrime) answer++;
+            if (isPrime) {
+                answer++;
+            }
+        }
         }
         
         return answer;
