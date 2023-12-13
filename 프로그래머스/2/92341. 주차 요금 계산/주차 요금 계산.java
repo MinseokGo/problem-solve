@@ -3,8 +3,8 @@ import java.time.*;
 
 class Solution {
     public int[] solution(int[] fees, String[] records) {
-        Map<String, String> times = new LinkedHashMap<>();
-        Map<String, Integer> minutes = new LinkedHashMap<>();
+        Map<String, String> times = new HashMap<>();
+        Map<String, Integer> minutes = new HashMap<>();
         
         for (String record : records) {
             StringTokenizer st = new StringTokenizer(record);
@@ -18,7 +18,8 @@ class Solution {
             if (state.equals("OUT")) {
                 String inTime = times.get(number);
                 times.remove(number);
-                minutes.put(number, minutes.getOrDefault(number, 0) + price(inTime, time));
+                minutes.put(number, minutes.getOrDefault(number, 0) 
+                            + price(inTime, time));
             }
         }
         
@@ -41,8 +42,6 @@ class Solution {
             }
             i++;
         }
-        
-        
         
         return answer;
     }
