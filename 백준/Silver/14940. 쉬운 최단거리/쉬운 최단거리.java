@@ -6,6 +6,11 @@ import java.util.StringTokenizer;
 
 public class Main {
 	
+	static int[][] map = new int[1000][1000];
+    static int[][] visited = new int[1000][1000];
+    static int[][] dist = new int[1000][1000];
+	
+	
 	static int N;
 	static int M;
 	
@@ -37,10 +42,7 @@ public class Main {
         //++
         //StringTokenizer st = new StringTokenizer(in.readLine());
         
-        int[][] map = new int[1000][1000];
-        int[][] visited = new int[1000][1000];
-        int[][] dist = new int[1000][1000];
-		
+        
         String [] nm = in.readLine().split(" ");
         N = Integer.parseInt(nm[0]);
         M = Integer.parseInt(nm[1]);
@@ -64,20 +66,23 @@ public class Main {
         		}
         }
         
-        Queue<Pair> Q = new LinkedList<Pair>();
-        Q.add(new Pair(start[0],start[1],0));
+        //Queue<Pair> Q = new LinkedList<Pair>();
+        Queue<int[]> Q = new LinkedList<>();
+        //Q.add(new Pair(start[0],start[1],0));
+        Q.add(new int[] {start[0],start[1],0});
         
         while(!Q.isEmpty()) {
-        	Pair curr = Q.peek(); Q.remove();
+        	//Pair curr = Q.peek(); Q.remove();
+        	int []curr = Q.poll();
         	
         	
-        	if(visited[curr.y][curr.x] == 1)continue;
-        	visited[curr.y][curr.x]= 1; 
-        	dist[curr.y][curr.x]= curr.d; 
+        	if(visited[curr[0]][curr[1]] == 1)continue;
+        	visited[curr[0]][curr[1]]= 1; 
+        	dist[curr[0]][curr[1]]= curr[2];
         	
         	for(int i=0;i<4;i++) {
-        		int goy = curr.y + movepos[i][0];
-        		int gox = curr.x + movepos[i][1];
+        		int goy = curr[0] + movepos[i][0];
+        		int gox = curr[1] + movepos[i][1];
         		
         		//1. isIn 함수 X?
 //        		if(isIn(goy,gox)) {
@@ -86,7 +91,8 @@ public class Main {
         			if(map[goy][gox]==0)continue;
         			
         			
-        			Q.add(new Pair(goy,gox,curr.d+1));
+//        			Q.add(new Pair(goy,gox,curr.d+1));
+        			Q.add(new int[] {goy,gox,curr[2]+1});
         		}
         		
         	}
