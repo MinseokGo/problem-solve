@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
 	
@@ -33,6 +34,9 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         
+        //++
+        //StringTokenizer st = new StringTokenizer(in.readLine());
+        
         int[][] map = new int[1000][1000];
         int[][] visited = new int[1000][1000];
         int[][] dist = new int[1000][1000];
@@ -40,13 +44,19 @@ public class Main {
         String [] nm = in.readLine().split(" ");
         N = Integer.parseInt(nm[0]);
         M = Integer.parseInt(nm[1]);
+        //N = Integer.parseInt(st.nextToken());
+        //M = Integer.parseInt(st.nextToken());
         
         int []start = new int[2];
         
         for(int i=0;i<N;i++) {
         		String [] input = in.readLine().split(" ");
+        		//st = new StringTokenizer(in.readLine());
+        		
         		for(int j=0;j<M;j++) {
         			map[i][j] = Integer.parseInt(input[j]);
+        			//map[i][j] = Integer.parseInt(st.nextToken());
+        			
         			if(map[i][j] == 2) {
         				start[0]=i;
         				start[1]=j;
@@ -59,6 +69,8 @@ public class Main {
         
         while(!Q.isEmpty()) {
         	Pair curr = Q.peek(); Q.remove();
+        	
+        	
         	if(visited[curr.y][curr.x] == 1)continue;
         	visited[curr.y][curr.x]= 1; 
         	dist[curr.y][curr.x]= curr.d; 
@@ -66,7 +78,10 @@ public class Main {
         	for(int i=0;i<4;i++) {
         		int goy = curr.y + movepos[i][0];
         		int gox = curr.x + movepos[i][1];
-        		if(isIn(goy,gox)) {
+        		
+        		//1. isIn 함수 X?
+//        		if(isIn(goy,gox)) {
+        		if(0 <= goy && goy < N && 0 <= gox && gox < M ) {
         			if(visited[goy][gox] == 1)continue;
         			if(map[goy][gox]==0)continue;
         			
