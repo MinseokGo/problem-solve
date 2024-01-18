@@ -6,13 +6,15 @@ import java.util.StringTokenizer;
 
 public class Main {
 	
-	static int[][] map = new int[1000][1000];
-    static int[][] visited = new int[1000][1000];
-    static int[][] dist = new int[1000][1000];
-	
-	
 	static int N;
 	static int M;
+	
+	static int[][] map;
+    static int[][] visited ;
+    static int[][] dist ;
+	
+	
+	
 	
 	public static class Pair{
 		int x;
@@ -34,6 +36,8 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
+	
+		
 		int [][] movepos = {{0,1},{0,-1},{1,0},{-1,0}};
 		
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -46,6 +50,10 @@ public class Main {
         String [] nm = in.readLine().split(" ");
         N = Integer.parseInt(nm[0]);
         M = Integer.parseInt(nm[1]);
+        
+        map = new int[N][M];
+        visited = new int[N][M];
+        dist = new int[N][M];
         //N = Integer.parseInt(st.nextToken());
         //M = Integer.parseInt(st.nextToken());
         
@@ -107,7 +115,8 @@ public class Main {
         			sb.append("-1 ");
         		}
         		else {
-        			sb.append(dist[i][j]+" ");
+        			sb.append(dist[i][j]);
+                    sb.append(" ");
         		}
         	}
         	sb.append("\n");
