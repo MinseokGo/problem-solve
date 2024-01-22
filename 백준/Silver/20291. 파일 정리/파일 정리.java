@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 public class Main {
@@ -11,8 +12,10 @@ public class Main {
         final int times = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < times; i++) {
-            String[] tokens = br.readLine().split("\\.");
-            files.put(tokens[1], files.getOrDefault(tokens[1], 0) + 1);
+            StringTokenizer tokens = new StringTokenizer(br.readLine(), "\\.");
+            final String trash = tokens.nextToken();
+            final String need = tokens.nextToken();
+            files.put(need, files.getOrDefault(need, 0) + 1);
         }
 
         for (Map.Entry<String, Integer> file : files.entrySet()) {
