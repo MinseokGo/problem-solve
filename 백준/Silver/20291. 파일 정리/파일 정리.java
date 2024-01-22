@@ -1,16 +1,13 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-        Map<String, Integer> files = new HashMap<>();
+        Map<String, Integer> files = new TreeMap<>();
         final int times = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < times; i++) {
@@ -18,13 +15,10 @@ public class Main {
             files.put(tokens[1], files.getOrDefault(tokens[1], 0) + 1);
         }
 
-        List<String> fileNames = new ArrayList<>(files.keySet());
-        fileNames.sort(Comparator.naturalOrder());
-
-        for (String fileName : fileNames) {
-            sb.append(fileName)
+        for (Map.Entry<String, Integer> file : files.entrySet()) {
+            sb.append(file.getKey())
                     .append(" ")
-                    .append(files.get(fileName))
+                    .append(file.getValue())
                     .append("\n");
         }
 
