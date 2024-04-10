@@ -30,6 +30,8 @@ class Solution {
             }
         }
         
-        return result.stream().mapToInt(Integer::intValue).toArray();
+        return result.stream()
+            .mapToInt(Integer::intValue)
+            .toArray();
     }
 }
