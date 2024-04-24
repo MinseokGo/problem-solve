@@ -2,22 +2,27 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        boolean answer = false;
-        Stack<Character> stack = new Stack<>();
+        Stack<Character> brackets = new Stack<>();
         
-        for(int i=0; i<s.length(); i++) {
-            if(s.charAt(0) == ')') {
-                return false;
+        for (int i = 0; i < s.length(); i++) {
+            char bracket = s.charAt(i);
+            if (bracket == '(') {
+                brackets.push(bracket);
             }
-            char c = s.charAt(i);
-            if(c == '(') stack.push(c);
-            else if(c == ')') {
-                if(stack.isEmpty()) return false;
-                stack.pop();
+            if (bracket == ')') {
+                if (brackets.size() > 0) {
+                    brackets.pop();
+                } else {
+                    return false;
+                }
+                
             }
         }
-        if(stack.isEmpty() && s.length() != 0) answer = true;
-            
-        return answer;
+        
+        if (brackets.size() > 0) {
+            return false;
+        }
+        
+        return true;
     }
 }
