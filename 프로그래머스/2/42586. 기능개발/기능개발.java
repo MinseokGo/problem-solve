@@ -2,32 +2,41 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        List<Integer> answer = new ArrayList<>();
-        int[] arr = new int[progresses.length];
-        int j=0;
+        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        List<Integer> result = new ArrayList<>();
+        int index = 0;
         
-        for(int i : progresses) {
-            if((100-i) % speeds[j] == 0) {
-                arr[j] = (100-i) / speeds[j];
-            } else {
-                arr[j] = (100-i) / speeds[j];
-                arr[j]++;
-            }
-            j++;
+        for (int progress : progresses) {
+            queue.addLast(progress);
         }
-        int cnt = 1;
-        int pilotNum = arr[0];
-        for(int i=1; i<arr.length; i++) {
-            if(pilotNum >= arr[i]) {
-                cnt++;
-            } else {
-                answer.add(cnt);
-                pilotNum = arr[i];
-                cnt = 1;
-            }
-        }
-        answer.add(cnt);
         
-        return answer.stream().mapToInt(x->x).toArray();
+        do {
+            int count = 1;
+            int task = queue.pollFirst();
+            int speed = speeds[index];
+            int times = (int) Math.ceil(((double) 100 - task) / speed);
+            System.out.println(times);
+            index++;
+            
+            while (!queue.isEmpty()) {
+                int nextTask = queue.pollFirst();
+                int nextSpeed = speeds[index];
+                int nextTimes = (int) 
+                    Math.ceil(((double) 100 - nextTask) / nextSpeed);
+                System.out.println(nextTimes);
+                if (times >= nextTimes) {
+                    count++;
+                    index++;
+                } else {
+                    queue.addFirst(nextTask);
+                    break;
+                }
+            }
+            result.add(count);
+        } while (!queue.isEmpty());
+        
+        return result.stream()
+            .mapToInt(Integer::intValue)
+            .toArray();
     }
 }
