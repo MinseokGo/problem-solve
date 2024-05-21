@@ -1,34 +1,40 @@
 import java.util.*;
 
 class Solution {
-    public String solution(String[] cards1, String[] cards2, String[] goal) {
-        String answer = "Yes";
-        HashMap<String, Integer> map1 = new HashMap<>();
-        HashMap<String, Integer> map2 = new HashMap<>();
-        int idx1 = 1;
-        int idx2 = 1;
+    public String solution(String[] arr1,
+                           String[] arr2,
+                           String[] goals) {
         
-        for(int i=0; i<cards1.length; i++) map1.put(cards1[i], i + 1);
-        for(int i=0; i<cards2.length; i++) map2.put(cards2[i], i + 1);
+        ArrayDeque<String> cards1 = new ArrayDeque<>();
+        ArrayDeque<String> cards2 = new ArrayDeque<>();
         
-        
-        for(String str : goal) {
-            if(map1.containsKey(str)) {
-                if(map1.get(str) == idx1) {
-                    idx1++;
-                } else {
-                    return "No";
-                }
-            } else if(map2.containsKey(str)) {
-                if(map2.get(str) == idx2) {
-                    idx2++;
-                } else {
-                    return "No";
-                }
-                
-            }
+        for (int i = 0; i < arr1.length; i++) {
+            cards1.addLast(arr1[i]);
+        }
+        for (int i = 0; i < arr2.length; i++) {
+            cards2.addLast(arr2[i]);
         }
         
-        return answer;
+        for (int i = 0; i < goals.length; i++) {
+            String goal = goals[i];
+            if (!cards1.isEmpty()) {
+                String card = cards1.pollFirst();
+                if (card.equals(goal)) {
+                    continue;
+                } else {
+                    cards1.addFirst(card);
+                }
+            }
+            if (!cards2.isEmpty()) {
+                String card = cards2.pollFirst();
+                if (card.equals(goal)) {
+                    continue;
+                } else {
+                    cards2.addFirst(card);
+                }
+            }
+            return "No";
+        }
+        return "Yes";
     }
 }
