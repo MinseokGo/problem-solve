@@ -2,25 +2,23 @@ import java.util.*;
 
 class Solution {
     public String[] solution(String[] records) {
+        Map<String, String> map = new HashMap<>();
         List<String> answer = new ArrayList<>();
-        Map<String, String> names = new HashMap<>();
         
         for (String record : records) {
-            String[] strings = record.split(" ");
-            if (strings.length == 3) {
-                names.put(strings[1], strings[2]);
-            }
+            String[] splits = record.split("\\s");
+            if (splits.length == 3) {
+                map.put(splits[1], splits[2]);
+            } 
         }
         
         for (String record : records) {
-            String[] strings = record.split("\\s");
-            if (strings[0].equals("Enter")) {
-                String name = names.get(strings[1]);
-                answer.add(name + "님이 들어왔습니다.");
+            String[] splits = record.split("\\s");
+            if (splits[0].startsWith("E")) {
+                answer.add(map.get(splits[1]) + "님이 들어왔습니다.");
             }
-            if (strings[0].equals("Leave")) {
-                String name = names.get(strings[1]);
-                answer.add(name + "님이 나갔습니다.");
+            if (splits[0].startsWith("L")) {
+                answer.add(map.get(splits[1]) + "님이 나갔습니다.");
             }
         }
         
