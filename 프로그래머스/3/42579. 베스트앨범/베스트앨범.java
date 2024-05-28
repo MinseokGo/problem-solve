@@ -1,47 +1,34 @@
 import java.util.*;
-import java.util.Collections;
+import java.util.stream.Stream;
 
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
+        Map<String, ArrayList<int[]>> genresMap = new HashMap<>();
+        Map<String, Integer> playMap = new HashMap<>();
         List<Integer> answer = new ArrayList<>();
-        Map<String, Integer> map = new HashMap<>();
         
         for (int i = 0; i < genres.length; i++) {
-            map.put(genres[i], map.getOrDefault(genres[i], 0) + plays[i]);
+            String genre = genres[i];
+            int play = plays[i];
+            
+            if (!genresMap.containsKey(genre)) {
+                genresMap.put(genre, new ArrayList());
+                playMap.put(genre, 0);
+            }
+            genresMap.get(genre).add(new int[] {i, play});
+            playMap.put(genre, playMap.get(genre) + play);
         }
         
-        List<Integer> values = new ArrayList<>(map.values());
-        Collections.sort(values, (o1, o2) -> o2 - o1);
-        for (int value : values) {
-            for (String key : map.keySet()) {
-                if (map.get(key) == value) {
-                    List<Integer> orders = new ArrayList<>();
-                    for (int i = 0; i < genres.length; i++) {
-                        if (key.equals(genres[i])) {
-                            orders.add(i);
-                        }
-                    }
-                    if (orders.size() > 1) {
-                        Collections.sort(orders, new Comparator<Integer>() {
-                            @Override
-                            public int compare(Integer a, Integer b) {
-                                if (plays[a] > plays[b]) {
-                                    return -1;
-                                } else if (plays[a] == plays[b]) {
-                                    return a - b;
-                                } else {
-                                    return 1;
-                                }
-                            }
-                        });
-                        answer.add(orders.get(0));
-                        answer.add(orders.get(1));
-                    } else {
-                        answer.add(orders.get(0));
-                    }
-                }
-            }
-        }
+        Stream<Map.Entry<String, Integer>> sortedMap = playMap.entrySet().stream()
+            .sorted((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()));
+        
+        sortedMap.forEach(entry -> {
+            Stream<int[]> sortedEachPlays = genresMap.get(entry.getKey()).stream()
+                .sorted((arr1, arr2) -> Integer.compare(arr2[1], arr1[1]))
+                .limit(2);
+            
+            sortedEachPlays.forEach(arr -> answer.add(arr[0]));
+        });
         
         return answer.stream()
             .mapToInt(Integer::intValue)
