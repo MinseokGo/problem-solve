@@ -9,7 +9,6 @@ class Solution {
         for (int i = 0; i < genres.length; i++) {
             map.put(genres[i], map.getOrDefault(genres[i], 0) + plays[i]);
         }
-        map.values().forEach(System.out::println);
         
         List<Integer> values = new ArrayList<>(map.values());
         Collections.sort(values, (o1, o2) -> o2 - o1);
