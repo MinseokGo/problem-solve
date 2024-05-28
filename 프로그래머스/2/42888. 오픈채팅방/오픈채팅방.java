@@ -14,14 +14,14 @@ class Solution {
         
         for (String record : records) {
             String[] splits = record.split("\\s");
-            if (splits[0].startsWith("E")) {
+            if (splits[0].equals("Enter")) {
                 answer.add(map.get(splits[1]) + "님이 들어왔습니다.");
             }
-            if (splits[0].startsWith("L")) {
+            if (splits[0].equals("Leave")) {
                 answer.add(map.get(splits[1]) + "님이 나갔습니다.");
             }
         }
         
-        return answer.toArray(new String[answer.size()]);
+        return answer.toArray(new String[0]);
     }
 }
