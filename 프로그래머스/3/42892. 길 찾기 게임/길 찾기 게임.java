@@ -5,10 +5,12 @@ class Solution {
     private static final List<Node> nodes = new ArrayList<>();
     
     public int[][] solution(int[][] nodeinfos) {
+        // adding node by index(=num)
         for (int i = 0; i < nodeinfos.length; i++) {
             nodes.add(new Node(i + 1, nodeinfos[i][0],  nodeinfos[i][1]));
         }
         
+        // sort about y
         Collections.sort(nodes, (n1, n2) -> {
             return n2.y - n1.y;
         });
@@ -16,15 +18,19 @@ class Solution {
         Node root = nodes.get(0);
         nodes.remove(0);
         
+        // to Binary Tree
         for (Node node : nodes) {
             binaryTree(root, node);
         }
+        
+        // pre order search
         List<Integer> preOrders = new ArrayList<>();
         preOrder(root, preOrders);
         int[] pre = preOrders.stream().
             mapToInt(Integer::intValue)
             .toArray();
         
+        // post order search
         List<Integer> postOrders = new ArrayList<>();
         postOrder(root, postOrders);
         int[] post = postOrders.stream().
@@ -89,10 +95,6 @@ class Solution {
             this.num = num;
             this.x = x;
             this.y = y;
-        }
-        
-        public String toString() {
-            return "Node" + num + "(" + x + ", " + y + ")";
         }
     }
 }
