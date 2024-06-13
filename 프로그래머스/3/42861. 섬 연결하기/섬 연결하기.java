@@ -6,6 +6,7 @@ class Solution {
         
     public int solution(int n, int[][] costs) {
         int answer = 0;
+        int edges = 0;
         Arrays.sort(costs, (c1, c2) -> Integer.compare(c1[2], c2[2]));
         
         parent = new int[n + 1];
@@ -14,9 +15,13 @@ class Solution {
         }
         
         for (int[] cost : costs) {
+            if (edges == n - 1) {
+                return answer;
+            }
             if (Integer.compare(find(cost[0]), find(cost[1])) != 0) {
                 union(cost[0], cost[1]);
                 answer += cost[2];
+                edges++;
             }
         }
         
@@ -27,8 +32,7 @@ class Solution {
         if (parent[x] == x) {
             return x;
         }
-        parent[x] = find(parent[x]);
-        return parent[x];
+        return find(parent[x]);
     }
     
     private void union(int a, int b) {
