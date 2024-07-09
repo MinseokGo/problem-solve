@@ -17,15 +17,19 @@ class Solution {
     private int bfs(Position position, int[][] maps) {
         Queue<Position> queue = new LinkedList<>();
         queue.add(position);
-        int min = 30000;
         maps[position.x][position.y] = 0;
         
         while (!queue.isEmpty()) {
             Position present = queue.poll();
+            
             for (int i = 0; i < 4; i++) {
                 int dx = present.x + nx[i];
                 int dy = present.y + ny[i];
-                if (dx == n - 1 && dy == m - 1) return present.count + 1;
+                
+                if (dx == n - 1 && dy == m - 1) {
+                    return present.count + 1;
+                }
+                
                 if (!isValidPosition(dx, dy) && maps[dx][dy] != 0) {
                     queue.add(new Position(dx, dy, present.count + 1));
                     maps[dx][dy] = 0;
