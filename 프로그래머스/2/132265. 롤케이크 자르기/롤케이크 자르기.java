@@ -5,22 +5,20 @@ class Solution {
     public int solution(int[] toppings) {
         int answer = 0;
         
-        Set<Integer> left = new HashSet<>();
-        
-        Map<Integer, Integer> rightCount = new HashMap<>();
+        Map<Integer, Integer> right = new HashMap<>();
         for (int topping : toppings) {
-            rightCount.put(topping, rightCount.getOrDefault(topping, 0) + 1);
+            right.put(topping, right.getOrDefault(topping, 0) + 1);
         }
         
-        for (int i = 0; i < toppings.length - 1; i++) {
-            left.add(toppings[i]);
-            
-            rightCount.put(toppings[i], rightCount.get(toppings[i]) - 1);
-            if (rightCount.get(toppings[i]) == 0) {
-                rightCount.remove(toppings[i]);
+        Set<Integer> left = new HashSet<>();
+        for (int topping : toppings) {
+            left.add(topping);
+            right.put(topping, right.get(topping) - 1);
+            if (right.get(topping) == 0) {
+                right.remove(topping);
             }
             
-            if (left.size() == rightCount.size()) {
+            if (left.size() == right.size()) {
                 answer++;
             }
         }
