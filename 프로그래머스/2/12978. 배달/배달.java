@@ -4,7 +4,7 @@ class Solution {
     
     public int solution(int N, int[][] road, int K) {
         int answer = 0;
-
+        
         ArrayList<Node>[] nodes = new ArrayList[N + 1];
         for (int i = 1; i < nodes.length; i++) {
             nodes[i] = new ArrayList<>();
@@ -12,19 +12,19 @@ class Solution {
         
         int[] distance = new int[N + 1];
         Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[1] = 0;
         
         for (int i = 0; i < road.length; i++) {
             nodes[road[i][0]].add(new Node(road[i][1], road[i][2]));
             nodes[road[i][1]].add(new Node(road[i][0], road[i][2]));
         }
-        distance[1] = 0;
         
         dijkstra(nodes, distance);
         for (int i = 1; i < distance.length; i++) {
             if (distance[i] <= K) {
                 answer++;
             }
-        } 
+        }
         
         return answer;
     }
