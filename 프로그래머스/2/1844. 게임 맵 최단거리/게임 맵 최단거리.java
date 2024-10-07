@@ -26,17 +26,18 @@ class Solution {
                 if (nx == n - 1 && ny == m - 1) {
                     return position.count + 1;
                 }
-                if (isValidPosition(nx, ny) && maps[nx][ny] == 1) {
+                if (!isValidPosition(nx, ny) && maps[nx][ny] == 1) {
                     queue.add(new Position(nx, ny, position.count + 1));
                     maps[nx][ny] = 0;
                 }
             }
         }
+        
         return -1;
     }
     
     private boolean isValidPosition(int x, int y) {
-        return x >= 0 && y >= 0 && x < n && y < m;
+        return x < 0 || y < 0 || x >= n || y >= m;
     }
     
     static class Position {
