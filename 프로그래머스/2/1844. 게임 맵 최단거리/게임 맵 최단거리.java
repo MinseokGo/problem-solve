@@ -4,38 +4,39 @@ class Solution {
     
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
+    static int n;
+    static int m;
     
     public int solution(int[][] maps) {
-        boolean[][] visited = new boolean[maps.length][maps[0].length];
-        return bfs(maps, visited, 1);
+        n = maps.length;
+        m = maps[0].length;
+        return bfs(maps, 1);
     }
     
-    private int bfs(int[][] maps, boolean[][] visited, int count) {
+    private int bfs(int[][] maps, int count) {
         Queue<Position> queue = new LinkedList<>();
         queue.add(new Position(0, 0, count));
-        visited[0][0] = true;
+        maps[0][0] = 0;
         
         while (!queue.isEmpty()) {
             Position position = queue.poll();
             for (int i = 0; i < 4; i++) {
                 int nx = position.x + dx[i];
                 int ny = position.y + dy[i];
-                if (nx == maps.length - 1 && ny == maps[0].length - 1) {
+                if (nx == n - 1 && ny == m - 1) {
                     return position.count + 1;
                 }
-                if (isValidPosition(nx, ny, maps) && !visited[nx][ny]) {
-                    if (maps[nx][ny] == 1) {
-                        queue.add(new Position(nx, ny, position.count + 1));
-                        visited[nx][ny] = true;
-                    }
+                if (isValidPosition(nx, ny) && maps[nx][ny] == 1) {
+                    queue.add(new Position(nx, ny, position.count + 1));
+                    maps[nx][ny] = 0;
                 }
             }
         }
         return -1;
     }
     
-    private boolean isValidPosition(int x, int y, int[][] maps) {
-        return x >= 0 && y >= 0 && x < maps.length && y < maps[0].length;
+    private boolean isValidPosition(int x, int y) {
+        return x >= 0 && y >= 0 && x < n && y < m;
     }
     
     static class Position {
