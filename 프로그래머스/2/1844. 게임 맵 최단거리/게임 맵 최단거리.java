@@ -2,54 +2,49 @@ import java.util.*;
 
 class Solution {
     
-    final int[] nx = {-1, 1, 0, 0};
-    final int[] ny = {0, 0, -1, 1};
-    static int n;
-    static int m;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
     
     public int solution(int[][] maps) {
-        n = maps.length;
-        m = maps[0].length;
-        
-        return bfs(new Position(0, 0, 1), maps);
+        boolean[][] visited = new boolean[maps.length][maps[0].length];
+        return bfs(maps, visited, 1);
     }
     
-    private int bfs(Position position, int[][] maps) {
+    private int bfs(int[][] maps, boolean[][] visited, int count) {
         Queue<Position> queue = new LinkedList<>();
-        queue.add(position);
-        maps[position.x][position.y] = 0;
+        queue.add(new Position(0, 0, count));
+        visited[0][0] = true;
         
         while (!queue.isEmpty()) {
-            Position present = queue.poll();
-            
+            Position position = queue.poll();
             for (int i = 0; i < 4; i++) {
-                int dx = present.x + nx[i];
-                int dy = present.y + ny[i];
-                
-                if (dx == n - 1 && dy == m - 1) {
-                    return present.count + 1;
+                int nx = position.x + dx[i];
+                int ny = position.y + dy[i];
+                if (nx == maps.length - 1 && ny == maps[0].length - 1) {
+                    return position.count + 1;
                 }
-                
-                if (!isValidPosition(dx, dy) && maps[dx][dy] != 0) {
-                    queue.add(new Position(dx, dy, present.count + 1));
-                    maps[dx][dy] = 0;
+                if (isValidPosition(nx, ny, maps) && !visited[nx][ny]) {
+                    if (maps[nx][ny] == 1) {
+                        queue.add(new Position(nx, ny, position.count + 1));
+                        visited[nx][ny] = true;
+                    }
                 }
             }
         }
-        
         return -1;
     }
     
-    private boolean isValidPosition(int x, int y) {
-        return (x < 0 || x >= n || y < 0 || y >= m);
+    private boolean isValidPosition(int x, int y, int[][] maps) {
+        return x >= 0 && y >= 0 && x < maps.length && y < maps[0].length;
     }
     
     static class Position {
+        
         int x;
         int y;
         int count;
         
-        public Position(int x, int y, int count) {
+        Position(int x, int y, int count) {
             this.x = x;
             this.y = y;
             this.count = count;
