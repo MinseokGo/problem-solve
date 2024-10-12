@@ -23,22 +23,18 @@ class Solution {
             for (int i = 0; i < 4; i++) {
                 int nx = current.x + dx[i];
                 int ny = current.y + dy[i];
+                
                 if (!isValidPosition(nx, ny) || board[nx][ny] == 1) {
                     continue;
                 }
                 
-                int cost = 100;
-                if (current.direction == -1 || (current.direction - i) % 2 == 0) {
-                    cost += current.cost;
-                } else {
-                    cost += current.cost + 500;
-                }
+                int cost = calculateCost(current.direction, i, current.cost);
                 
-                if (nx == n - 1 && ny == n - 1) {
+                if (isArrivedDestination(nx, ny)) {
                     result = Math.min(result, cost);
                 }
                 
-                if (visited[nx][ny][i] == 0 || visited[nx][ny][i] > cost) {
+                if (isShouldUpdateCost(visited, nx, ny, i, cost)) {
                     queue.add(new Position(nx, ny, cost, i));
                     visited[nx][ny][i] = cost;
                 }
@@ -48,8 +44,29 @@ class Solution {
         return result;
     }
     
+    private int calculateCost(int prev, int current, int cost) {
+        if (prev == -1 || (prev - current) % 2 == 0) {
+            return cost + 100;
+        }
+        return cost + 600;
+    }
+    
     private boolean isValidPosition(int x, int y) {
         return x >= 0 && y >= 0 && x < n && y < n;
+    }
+    
+    private boolean isArrivedDestination(int x, int y) {
+        return x == n - 1 && y == n - 1;
+    }
+    
+    private boolean isShouldUpdateCost(
+        int[][][] visited,
+        int x,
+        int y,
+        int direction,
+        int cost
+    ) {
+        return visited[x][y][direction] == 0 || visited[x][y][direction] > cost;
     }
     
     static class Position {
