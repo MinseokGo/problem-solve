@@ -10,31 +10,18 @@ class Solution {
             foods.add(scoville);
         }
         
-        while (!foods.isEmpty()) {
+        while (foods.size() > 1) {
+            if (foods.peek() >= K) {
+                return answer;
+            }
+            
             int firstFood = foods.poll();
-            if (foods.isEmpty()) {
-                if (firstFood < K) {
-                    answer = -1;
-                    break;
-                }
-            }
-            
-            if (firstFood >= K) {
-                foods.add(firstFood);
-                break;
-            }
-            
-            if (foods.isEmpty()) {
-                break;
-            }
-            
             int secondFood = foods.poll();
-            
-            answer += 1;
             int newFood = firstFood + secondFood * 2;
             foods.add(newFood);
+            answer++;
         }
         
-        return answer;
+        return foods.peek() >= K ? answer : -1;
     }
 }
