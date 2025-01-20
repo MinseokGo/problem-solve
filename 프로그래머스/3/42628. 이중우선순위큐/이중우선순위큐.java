@@ -13,11 +13,10 @@ class Solution {
                 minQueue.add(Integer.parseInt(operation.substring(2)));
             }
             if (operation.startsWith("D")) {
-                int flag = Integer.parseInt(operation.substring(2));
-                if (flag == 1) {
+                if (!minQueue.isEmpty() && operation.equals("D 1")) {
                     minQueue.remove(maxQueue.poll());
                 }
-                if (flag == - 1) {
+                if (!maxQueue.isEmpty() && operation.equals("D -1")) {
                     maxQueue.remove(minQueue.poll());
                 }
             }
