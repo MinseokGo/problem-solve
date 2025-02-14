@@ -2,13 +2,10 @@ import java.util.*;
 
 class Solution {
     
-    static List<Integer>[] graph;
-    static int[] distance;
-    
     public int solution(int n, int[][] edges) {
-        graph = new ArrayList[n + 1];
+        List<Integer>[] graph = new ArrayList[n + 1];
         
-        for (int i = 0; i < n + 1; i++) {
+        for (int i = 0; i <= n; i++) {
             graph[i] = new ArrayList<>();
         }
         
@@ -17,39 +14,41 @@ class Solution {
             graph[edge[1]].add(edge[0]);
         }
 
-        bfs(n);
+        int[] distance = bfs(graph, n);
         
-        int max = Arrays.stream(distance)
+        int maxDistance = Arrays.stream(distance)
             .max()
             .getAsInt();
-        
+
         int count = 0;
-        for (int i = 2; i < n + 1; i++) {
-            if (max == distance[i]) {
+        for (int i = 2; i <= n; i++) {
+            if (distance[i] == maxDistance) {
                 count++;
             }
         }
-        
+
         return count;
     }
-    
-    private void bfs(int n) {
-        distance = new int[n + 1];
+
+    private int[] bfs(List<Integer>[] graph, int n) {
+        int[] distance = new int[n + 1];
         Arrays.fill(distance, -1);
-        distance[1] = 0;
-        
+
         Queue<Integer> queue = new LinkedList<>();
         queue.add(1);
-        
+        distance[1] = 0;
+
         while (!queue.isEmpty()) {
             int node = queue.poll();
-            
+
             for (int next : graph[node]) {
-                if (distance[next] == -1) {
+                if (distance[next] == -1) { // 방문하지 않은 노드
                     queue.add(next);
                     distance[next] = distance[node] + 1;
                 }
             }
         }
+
+        return distance;
     }
 }
