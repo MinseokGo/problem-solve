@@ -3,32 +3,19 @@ import java.util.*;
 class Solution {
     
     public int[] solution(String input) {
-        List<Integer> answer = new ArrayList<>();
         input = input.substring(2, input.length() - 2);
-        String[] strings = input.split("\\},\\{");
-        List<List<Integer>> tuples = new ArrayList<>();
+        List<String> tuples = Arrays.asList(input.split("\\},\\{"));
+        tuples.sort(Comparator.comparingInt(String::length));
         
-        Arrays.sort(strings, (s1, s2) -> Integer.compare(s1.length(), s2.length()));
-        for (int i = 0; i < strings.length; i++) {
-            String[] numbers = strings[i].split(",");
-            List<Integer> tuple = new ArrayList<>();
-            
-            for (int j = 0; j < numbers.length; j++) {
-                tuple.add(Integer.parseInt(numbers[j]));
-            }
-            tuples.add(tuple);
-        }
+        Set<Integer> numberSet = new LinkedHashSet<>();
         
-        Set<Integer> numberSet = new HashSet<>();
-        for (List<Integer> tuple : tuples) {
-            for (int number : tuple) {
-                if (numberSet.add(number)) {
-                    answer.add(number);
-                }
+        for (String tuple : tuples) {
+            for (String number : tuple.split(",")) {
+                numberSet.add(Integer.parseInt(number));
             }
         }
         
-        return answer.stream()
+        return numberSet.stream()
                     .mapToInt(Integer::intValue)
                     .toArray();
     }
