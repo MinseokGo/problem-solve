@@ -46,7 +46,7 @@ class Solution {
         }
         
         return indexes.stream()
-                    .mapToInt(i -> i)
+                    .mapToInt(Integer::intValue)
                     .toArray();
     }
 }
