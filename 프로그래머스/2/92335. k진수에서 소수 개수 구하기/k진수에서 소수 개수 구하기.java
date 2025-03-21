@@ -1,37 +1,31 @@
 import java.util.*;
 
 class Solution {
+    
     public int solution(int n, int k) {
         int answer = 0;
-        String str = Integer.toString(n, k) + "0";
-        Queue<String> queue = new LinkedList<>();
         
-        int index = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == '0') {
-                String sub = str.substring(index, i);
-                if (sub.length() != 0) {
-                    queue.add(sub);
-                }
-                index = i + 1;                
+        String[] numbers = Integer.toString(n, k).split("0");
+        for (String str : numbers) {
+            if (str.length() == 0) {
+                continue;
             }
-        }
-        
-        while (!queue.isEmpty()) {
-            String sub = queue.poll();
-            if (!sub.equals("1")) {
-                long number = Long.parseLong(sub, 10);
-                
-                boolean isPrime = true;
-                for (int i = 2; i <= Math.pow(number, 0.5); i++) {
+            
+            long number = Long.parseLong(str, 10);
+            boolean isPrime = true;
+            if (number != 1) {
+                for (int i = 2; i <= Math.sqrt(number); i++) {
                     if (number % i == 0) {
                         isPrime = false;
+                        break;
                     }
                 }
+            } else {
+                continue;
+            }
             
-                if (isPrime) {
-                    answer += 1;
-                }
+            if (isPrime) {
+                answer += 1;
             }
         }
         
