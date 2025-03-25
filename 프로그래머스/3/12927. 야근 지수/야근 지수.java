@@ -12,10 +12,10 @@ class Solution {
         
         while (n > 0) {
             int work = pq.poll();
-            if (work > 0) {
-                work -= 1;
+            if (work <= 0) {
+                break;
             }
-            pq.add(work);
+            pq.add(work - 1);
             n--;
         }
         
