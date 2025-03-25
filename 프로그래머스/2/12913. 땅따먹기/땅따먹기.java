@@ -1,4 +1,5 @@
 class Solution {
+    
     int solution(int[][] land) {
         int n = land.length;
         
