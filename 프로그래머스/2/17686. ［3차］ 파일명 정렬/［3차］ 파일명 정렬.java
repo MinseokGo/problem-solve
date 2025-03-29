@@ -4,26 +4,17 @@ class Solution {
     
     public String[] solution(String[] files) {
         Arrays.sort(files, (s1, s2) -> {
-            String[] headAndNumber1 = getHeadAndNumber(s1);
-            String head1 = headAndNumber1[0];
-            String number1 = headAndNumber1[1];
+            String[] h1 = getHeadAndNumber(s1);
+            String[] h2 = getHeadAndNumber(s2);
             
-            String[] headAndNumber2 = getHeadAndNumber(s2);
-            String head2 = headAndNumber2[0];
-            String number2 = headAndNumber2[1];
-            
-            if (!head1.equals(head2)) {
-                return head1.compareTo(head2);
+            int headCompare = h1[0].compareToIgnoreCase(h2[0]);
+            if (headCompare != 0) {
+                return headCompare;
             }
             
-            int num1 = Integer.parseInt(number1);
-            int num2 = Integer.parseInt(number2);
-            
-            if (num1 != num2) {
-                return Integer.compare(num1, num2);
-            }
-            
-            return 0;
+            int number1 = Integer.parseInt(h1[1]);
+            int number2 = Integer.parseInt(h2[1]);
+            return Integer.compare(number1, number2);
         });
         
         return files;
@@ -51,6 +42,6 @@ class Solution {
             number = str.substring(start, str.length());
         }
         
-        return new String[] {head.toUpperCase(), number};
+        return new String[] {head, number};
     }
 }
