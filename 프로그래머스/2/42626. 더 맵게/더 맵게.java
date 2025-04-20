@@ -4,24 +4,24 @@ class Solution {
     
     public int solution(int[] scovilles, int K) {
         int answer = 0;
-        PriorityQueue<Integer> foods = new PriorityQueue<>();
-    
-        for (int scoville : scovilles) {
-            foods.add(scoville);
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        
+        for (int scovill : scovilles) {
+            pq.add(scovill);
         }
         
-        while (foods.size() > 1) {
-            if (foods.peek() >= K) {
-                return answer;
+        while (pq.peek() < K) {
+            if (pq.size() == 1) {
+                return -1;
             }
-            
-            int firstFood = foods.poll();
-            int secondFood = foods.poll();
+            int firstFood = pq.poll();
+            int secondFood = pq.poll();
             int newFood = firstFood + secondFood * 2;
-            foods.add(newFood);
-            answer++;
+            
+            pq.add(newFood);
+            answer += 1;
         }
         
-        return foods.peek() >= K ? answer : -1;
+        return answer;
     }
 }
