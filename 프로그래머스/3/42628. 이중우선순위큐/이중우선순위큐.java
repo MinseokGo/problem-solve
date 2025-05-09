@@ -3,29 +3,27 @@ import java.util.*;
 class Solution {
     
     public int[] solution(String[] operations) {
-        PriorityQueue<Integer> maxQueue 
-            = new PriorityQueue<>(Collections.reverseOrder());
-        PriorityQueue<Integer> minQueue = new PriorityQueue<>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
         
         for (String operation : operations) {
             if (operation.startsWith("I")) {
-                maxQueue.add(Integer.parseInt(operation.substring(2)));
-                minQueue.add(Integer.parseInt(operation.substring(2)));
-            }
-            if (operation.startsWith("D")) {
-                if (!minQueue.isEmpty() && operation.equals("D 1")) {
-                    minQueue.remove(maxQueue.poll());
-                }
-                if (!maxQueue.isEmpty() && operation.equals("D -1")) {
-                    maxQueue.remove(minQueue.poll());
+                int number = Integer.parseInt(operation.substring(2));
+                minHeap.add(number);
+                maxHeap.add(number);
+            } else {
+                if (operation.equals("D 1") && !minHeap.isEmpty()) {
+                    minHeap.remove(maxHeap.poll());
+                } else {
+                    maxHeap.remove(minHeap.poll());
                 }
             }
         }
         
-        if (minQueue.isEmpty() && maxQueue.isEmpty()) {
+        if (minHeap.isEmpty() && maxHeap.isEmpty()) {
             return new int[] {0, 0};
         }
         
-        return new int[] {maxQueue.poll(), minQueue.poll()};
+        return new int[] {maxHeap.poll(), minHeap.poll()};
     }
 }
