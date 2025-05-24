@@ -10,9 +10,6 @@ class Solution {
             if (mod >= 6 || mod == 5 && next >= 5) {
                 storey += 10 - mod;
                 answer += 10 - mod;
-            } else if (mod >= 5 && next >= 5) {
-                storey += 5;
-                answer += 5;
             } else {
                 answer += mod;
             }
