@@ -5,12 +5,9 @@ class Solution {
         
         while (storey > 0) {
             int mod = storey % 10;
-            int next = 0;
-            if (storey % 100 >= 50) {
-                next = storey % 100 - mod;
-            }
+            int next = storey % 100 / 10;
 
-            if (mod >= 6) {
+            if (mod >= 6 || mod == 5 && next >= 5) {
                 storey += 10 - mod;
                 answer += 10 - mod;
             } else if (mod >= 5 && next >= 5) {
